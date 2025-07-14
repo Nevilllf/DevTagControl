@@ -3,7 +3,7 @@
  */
 export interface TagDefinition {
   tagdefinitionid: string;
-  new_name: string;
+  evergrn_name: string;
 }
 
 /**
@@ -13,12 +13,12 @@ export interface TagDefinition {
 export async function fetchAllTags(): Promise<string[]> {
   try {
     const result = await Xrm.WebApi.retrieveMultipleRecords(
-      "new_tagdefinition",
-      "?$select=new_name"
+      "evergrn_tagdefinition",
+      "?$select=evergrn_name"
     );
 
     const tags: string[] = result.entities
-      .map((record: TagDefinition) => record.new_name?.trim())
+      .map((record: TagDefinition) => record.evergrn_name?.trim())
       .filter((tag): tag is string => !!tag);
 
     return [...new Set(tags)]; // Deduplicate

@@ -102,12 +102,12 @@ export async function isTagCreationAllowed(
 
     // 2. Retrieve the TagSettings record with matching Choice value
     const result = await Xrm.WebApi.retrieveMultipleRecords(
-      "cr670_tagsettings",
-      `?$filter=cr670_entityname eq ${choiceValue}`
+      "evergrn_tagsettings",
+      `?$filter=evergrn_entityname eq ${choiceValue}`
     );
 
     if (result.entities.length > 0) {
-      const rawValue = result.entities[0].cr670_allowtagcreation;
+      const rawValue = result.entities[0].evergrn_allowtagcreation;
       //console.log("TAG CREATION RAW VALUE:", rawValue, typeof rawValue);
       return rawValue == 1;
     }

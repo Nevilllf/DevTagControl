@@ -8,24 +8,24 @@ export async function createNewTag(name: string): Promise<string | null> {
     const encodedName = trimmedName.replace(/'/g, "''"); // Escape single quotes for OData
 
     // Use contains to check for exact match
-    const filter = `startswith(new_name, '${encodedName}') or endswith(new_name, '${encodedName}') or new_name eq '${encodedName}'`;
+    const filter = `startswith(evergrn_name, '${encodedName}') or endswith(evergrn_name, '${encodedName}') or evergrn_name eq '${encodedName}'`;
 
     const result = await Xrm.WebApi.retrieveMultipleRecords(
-      "new_tagdefinition",
-      `?$select=new_name&$filter=${filter}`
+      "evergrn_tagdefinition",
+      `?$select=evergrn_name&$filter=${filter}`
     );
 
     const match = result.entities.find(
-      (tag) => tag.new_name?.trim().toLowerCase() === trimmedName.toLowerCase()
+      (tag) => tag.evergrn_name?.trim().toLowerCase() === trimmedName.toLowerCase()
     );
 
-    if (match?.new_name) {
-      return match.new_name.trim();
+    if (match?.evergrn_name) {
+      return match.evergrn_name.trim();
     }
 
     // No match, create new tag
-    const createResult = await Xrm.WebApi.createRecord("new_tagdefinition", {
-      new_name: trimmedName,
+    const createResult = await Xrm.WebApi.createRecord("evergrn_tagdefinition", {
+      evergrn_name: trimmedName,
     });
 
     return trimmedName;
