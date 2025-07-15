@@ -77,7 +77,7 @@ const choiceToEntityMap: Record<number, string> = {
 
 
 /**
- * TODO
+ * 
  * @param logicalEntityName
  * @returns
  */
@@ -95,7 +95,7 @@ export async function isTagCreationAllowed(
         "Entity not mapped in choiceToEntityMap:",
         currentEntityLogicalName
       );
-      return false;
+      return true; //default allow if not mapped
     }
 
     const [choiceValue] = matchingChoiceEntry;
@@ -112,9 +112,9 @@ export async function isTagCreationAllowed(
       return rawValue == 1;
     }
 
-    return false;
+    return true; //default allow if no tag setting record exists
   } catch (error) {
     console.error("Error checking tag creation setting:", error);
-    return false;
+    return true; //default allow on error
   }
 }

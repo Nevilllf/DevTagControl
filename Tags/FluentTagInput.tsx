@@ -51,7 +51,7 @@ const FluentTagInput: React.FC<FluentTagInputProps> = ({
   const styles = useStyles();
 
   /**
-   * 
+   *
    */
   React.useEffect(() => {
     //console.log("DEBUG TAG INPUT USE EFFECT: entityname: ", entityName);
@@ -191,40 +191,47 @@ const FluentTagInput: React.FC<FluentTagInputProps> = ({
    */
   return (
     <FluentProvider theme={webLightTheme}>
-      <TagPicker
-        onOptionSelect={onOptionSelect}
-        selectedOptions={selectedOptions}
-        positioning="below-start"
-        disabled={false}
-      >
-        <TagPickerControl>
-          <TagPickerGroup aria-label="Selected Tags">
-            {selectedOptions.map((option) => (
-              <Tag
-                key={option}
-                value={option}
-                shape="rounded"
-                media={<Avatar name={option} color="colorful" />}
-                title={option}
-                primaryText={{ className: styles.tagTruncated }}
-              >
-                {option}
-              </Tag>
-            ))}
-          </TagPickerGroup>
-          <TagPickerInput
-            aria-label="Select Tags"
-            value={query}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setQuery(e.target.value)
-            }
-            onKeyDown={handleKeyDown}
-          />
-        </TagPickerControl>
-        <TagPickerList style={{ maxHeight: 200, overflowY: "auto" }}>
-          {children}
-        </TagPickerList>
-      </TagPicker>
+      <div className={styles.wrapper}>
+        <TagPicker
+          onOptionSelect={onOptionSelect}
+          selectedOptions={selectedOptions}
+          positioning={{
+            position: 'below',     
+            align: 'start',        
+            strategy: 'absolute'   
+          }}
+          disabled={false}
+        >
+          <TagPickerControl className={styles.tagPickerControl}>
+            <TagPickerGroup aria-label="Selected Tags">
+              {selectedOptions.map((option) => (
+                <Tag
+                  key={option}
+                  value={option}
+                  shape="rounded"
+                  media={<Avatar name={option} color="colorful" />}
+                  title={option}
+                  primaryText={{ className: styles.tagTruncated }}
+                >
+                  {option}
+                </Tag>
+              ))}
+            </TagPickerGroup>
+            <TagPickerInput
+              aria-label="Select Tags"
+              value={query}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setQuery(e.target.value)
+              }
+              onKeyDown={handleKeyDown}
+              style={{ flex: "1 1 auto", minWidth: "120px" }} // allow shrinking
+            />
+          </TagPickerControl>
+          <TagPickerList style={{ maxHeight: 200, overflowY: "auto" }}>
+            {children}
+          </TagPickerList>
+        </TagPicker>
+      </div>
     </FluentProvider>
   );
 };
