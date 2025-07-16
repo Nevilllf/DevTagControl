@@ -28,6 +28,7 @@ interface FluentTagInputProps {
   value: string;
   entityName: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 }
 
 /**
@@ -41,6 +42,7 @@ const FluentTagInput: React.FC<FluentTagInputProps> = ({
   value,
   entityName,
   onChange,
+  disabled = false,
 }) => {
   const [query, setQuery] = React.useState<string>("");
   const [options, setOptions] = React.useState<string[]>([]);
@@ -200,7 +202,7 @@ const FluentTagInput: React.FC<FluentTagInputProps> = ({
             align: 'start',        
             strategy: 'absolute'   
           }}
-          disabled={false}
+          disabled={disabled}
         >
           <TagPickerControl className={styles.tagPickerControl}>
             <TagPickerGroup aria-label="Selected Tags">
@@ -220,6 +222,7 @@ const FluentTagInput: React.FC<FluentTagInputProps> = ({
             <TagPickerInput
               aria-label="Select Tags"
               value={query}
+              disabled={disabled} 
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setQuery(e.target.value)
               }
