@@ -49,6 +49,8 @@ export class Tags
                         _modeData?: { entityTypeName?: string };
                       })?._modeData?.entityTypeName ?? "unknown";
 
+    const isDisabled = context.mode.isControlDisabled;
+
     this.root.render(
       React.createElement(FluentTagInput, {
         value: value,
@@ -57,6 +59,7 @@ export class Tags
           this.currentValue = newValue;
           this.notifyOutputChanged();
         },
+        disabled: isDisabled, 
       })
     );
   }

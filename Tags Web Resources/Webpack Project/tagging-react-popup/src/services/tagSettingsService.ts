@@ -1,7 +1,3 @@
-/**
- * Hard Coded values to match Entity name with its logical name
- * Keep these values updated - approach can be improved
- */
 const choiceToEntityMap: Record<number, string> = {
   0: "account",
   1: "contact",
@@ -75,17 +71,10 @@ const choiceToEntityMap: Record<number, string> = {
   69: "evergrn_workschedule"
 };
 
-
-/**
- * 
- * @param logicalEntityName
- * @returns
- */
 export async function isTagCreationAllowed(
   currentEntityLogicalName: string
 ): Promise<boolean> {
   try {
-    // 1. Find the matching choice key from the map
     const matchingChoiceEntry = Object.entries(choiceToEntityMap).find(
       ([choiceValue, logicalName]) => logicalName === currentEntityLogicalName
     );
@@ -95,12 +84,11 @@ export async function isTagCreationAllowed(
         "Entity not mapped in choiceToEntityMap:",
         currentEntityLogicalName
       );
-      return true; //default allow if not mapped
+      return true;
     }
 
     const [choiceValue] = matchingChoiceEntry;
 
-    // 2. Retrieve the TagSettings record with matching Choice value
     const result = await Xrm.WebApi.retrieveMultipleRecords(
       "evergrn_tagsettings",
       `?$filter=evergrn_entityname eq ${choiceValue}`
@@ -108,13 +96,12 @@ export async function isTagCreationAllowed(
 
     if (result.entities.length > 0) {
       const rawValue = result.entities[0].evergrn_allowtagcreation;
-      //console.log("TAG CREATION RAW VALUE:", rawValue, typeof rawValue);
       return rawValue == 1;
     }
 
-    return true; //default allow if no tag setting record exists
+    return true;
   } catch (error) {
     console.error("Error checking tag creation setting:", error);
-    return true; //default allow on error
+    return true;
   }
 }
