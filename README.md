@@ -1,4 +1,4 @@
-# Tags PCF Control for Power Apps
+# Tags PCF Control for Model Driven Apps
 
 This PCF control adds a modern, Fluent UI–based tag picker to model-driven forms in EvergreenWorx applications. It enables flexible tagging of records using comma-delimited text fields, auto-suggestions, and inline tag management.
 
